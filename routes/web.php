@@ -18,3 +18,6 @@ use App\Http\Controllers\PostController;
 // Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 
 Route::resource('posts',PostController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

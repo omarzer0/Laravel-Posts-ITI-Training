@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -60,7 +68,7 @@ class PostController extends Controller
         $post = Post::create([
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => 1	
+            'user_id' => auth()->user()->id	
         ]);
         
         return redirect('/posts');
