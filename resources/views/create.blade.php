@@ -14,10 +14,10 @@
             <td><input type="text" name="content"></td>
         </tr>
 
-        <tr>
+        <!-- <tr>
             <td>posted by</td>
             <td><input type="text" name="posted_by"></td>
-        </tr>
+        </tr> -->
 
         <tr>
             <td> <input type="submit" value="Add"> </td>

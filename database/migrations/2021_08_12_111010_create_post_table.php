@@ -17,8 +17,12 @@ class CreatePostTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->string('posted_by');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+        });
+
+        Schema::table('posts', function (Blueprint $table) {      
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

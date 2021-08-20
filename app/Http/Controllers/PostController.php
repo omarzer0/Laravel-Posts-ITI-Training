@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -17,8 +19,23 @@ class PostController extends Controller
         // $posts = Post::get(); 
         // return view('welcome', compact('posts'));
 
+        // dd(User::find(1)->name);
+
         $posts = Post::all();
-        return view('welcome', compact('posts'));
+
+        
+        $data = [];
+
+        for ($i=0; $i < count($posts); $i++) { 
+            $data[$i] = [
+                'id'=>$posts[$i]['id'],
+                'title'=>$posts[$i]['title'],
+                'content'=>$posts[$i]['content'],
+                'posted_by'=>User::find($posts[$i]['user_id'])->name
+            ];
+        }
+        // dd($data);
+        return view('welcome', compact('data'));
     }
 
     /**
@@ -43,7 +60,7 @@ class PostController extends Controller
         $post = Post::create([
             'title' => $request->title,
             'content' => $request->content,
-            'posted_by' => $request->posted_by	
+            'user_id' => 1	
         ]);
         
         return redirect('/posts');
@@ -57,6 +74,12 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $post=[
+            'id'=>$post['id'],
+                'title'=>$post['title'],
+                'content'=>$post['content'],
+                'posted_by'=>User::find($post['user_id'])->name
+        ];
         return view('view',compact('post'));
     }
 
@@ -86,7 +109,6 @@ class PostController extends Controller
 
         $updatedPost->title = $request->title;
         $updatedPost->content = $request->content;
-        $updatedPost->posted_by = $request->posted_by;
 
         $updatedPost->save();
         return redirect('/posts');
